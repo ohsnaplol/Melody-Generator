@@ -9,7 +9,6 @@ import java.io.IOException;
 import static java.lang.System.out;
 
 public class MG_Main {
-	private static final String keyC[] = {"A", "B", "C", "D", "E", "F", "G"};
 
 	public static void main(String[] args) {
 		Scanner keyboard = new Scanner(System.in);
