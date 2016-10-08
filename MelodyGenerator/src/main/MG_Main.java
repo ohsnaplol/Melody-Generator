@@ -1,30 +1,34 @@
 package main;
 
 import org.jfugue.pattern.Pattern;
-import org.jfugue.player.Player;
-import java.util.Scanner;
+import java.awt.EventQueue;
 import java.util.Random;
-import java.io.File;
-import java.io.IOException;
-import static java.lang.System.out;
 
 public class MG_Main {
-
+	
 	public static void main(String[] args) {
-		Scanner keyboard = new Scanner(System.in);
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					GenerateWindow window = new GenerateWindow();
+					window.frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+	
+	public static void generate(int tempo, int numOfNotes) {
 		Pattern myPattern = new Pattern();
-		Player player = new Player();
-		Random rng = new Random();
-
+		
+		myPattern.add("T" + tempo); //no, this isn't why the first note is sometimes held longer
 		//fill the pattern with notes
-		for (int i = 0; i < 15; i++) {
+		Random rng = new Random();
+		for (int i = 0; i < numOfNotes; i++) {
 			myPattern.add(KEYSIG.GSMELMIN.getValue(rng.nextInt(7)));
 		}
-		
-		//play our tune!
-		player.play(myPattern);
-		//Show what we've got in myPattern
-		out.println(myPattern.getTokens());
-		keyboard.close();
+		//put the pattern into song data (this kinda sucks)
+		SongData.storedPattern = myPattern;
 	}
 }
