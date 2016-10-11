@@ -2,7 +2,6 @@ package main;
 
 import java.awt.Color;
 import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 //import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -93,7 +92,7 @@ public class GenerateWindow {
 		playButton.setEnabled(false);
 		playButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				SongData.play(); //how embarassing
+				Song.play();
 			}
 		});
 		playButton.setFont(new Font("Lucida Grande", Font.PLAIN, 23));
@@ -105,23 +104,22 @@ public class GenerateWindow {
 		btnGenerate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					//set tempo and num of notes in SongData from fields
-					SongData.tempo = Integer.parseInt(tempoField.getText());
-					SongData.numOfNotes = Integer.parseInt(numOfNotesField.getText());
+					Song.tempo = Integer.parseInt(tempoField.getText());
+					Song.numOfNotes = Integer.parseInt(numOfNotesField.getText());
 					//generate the random notes
-					MG_Main.generate(SongData.tempo, SongData.numOfNotes);
+					Song.generate();
 					//show what notes rng has chosen (for some reason this still only happens after notes are played)
-					lblSongOutput.setText(SongData.storedPattern.toString());
-					//let's hear it
-					SongData.play();
+					lblSongOutput.setText(Song.pattern.toString());
+					Song.play();
 					//make it so play button only shows up after you'd generated something to play
 					playButton.setEnabled(true); //do we really need to enable every time this button is clicked?
-				} catch (Exception ex) {
-					//would like border to be red if unsuccessful
+				} catch (Exception t) {
 					tempoField.setBackground(Color.red);
 					numOfNotesField.setBackground(Color.red);
-					System.out.println(ex);
-					JOptionPane.showMessageDialog(null,  "Please enter a valid number");
+					JOptionPane.showMessageDialog(null, "Please enter a valid number");
+				} finally {
+					tempoField.setBackground(null);
+					numOfNotesField.setBackground(null);
 				}
 			}
 		});

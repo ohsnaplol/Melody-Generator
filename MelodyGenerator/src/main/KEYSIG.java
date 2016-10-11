@@ -10,9 +10,11 @@ public enum KEYSIG {
 	//a melodic minor
 	AMELMIN("a b c d e f# g#"),
 	//G Major
+	//a harmonic minor
+	//AHARMIN("G A B C D E F#"),
 	
 	
-	GSMELMIN("g# a# b c# d# e f##"),
+	GSMELMIN("g# a# b c# d# e f##"), //cool and interesting
 	;
 	
 	private String values[];

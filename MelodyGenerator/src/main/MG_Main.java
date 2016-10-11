@@ -1,34 +1,34 @@
 package main;
 
-import org.jfugue.pattern.Pattern;
 import java.awt.EventQueue;
-import java.util.Random;
 
 public class MG_Main {
 	
+	//first argument is num of notes, second is tempo
 	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					GenerateWindow window = new GenerateWindow();
-					window.frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-	
-	public static void generate(int tempo, int numOfNotes) {
-		Pattern myPattern = new Pattern();
 		
-		myPattern.add("T" + tempo); //no, this isn't why the first note is sometimes held longer
-		//fill the pattern with notes
-		Random rng = new Random();
-		for (int i = 0; i < numOfNotes; i++) {
-			myPattern.add(KEYSIG.GSMELMIN.getValue(rng.nextInt(7)));
+		if (args.length > 0) {
+			try {
+				Song.numOfNotes = Integer.parseInt(args[0]);
+				Song.tempo = Integer.parseInt(args[1]);
+			} catch (Exception f) {
+				System.out.println("ERROR: Could not convert all arguments into numbers");
+				return;
+			}
+			Song.generate();
+			Song.play();
+			System.out.println(Song.pattern.toString());
+		} else {
+			EventQueue.invokeLater(new Runnable() {
+				public void run() {
+					try {
+						GenerateWindow window = new GenerateWindow();
+						window.frame.setVisible(true);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+			});
 		}
-		//put the pattern into song data (this kinda sucks)
-		SongData.storedPattern = myPattern;
 	}
 }
