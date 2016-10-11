@@ -15,7 +15,7 @@ import javax.swing.SwingConstants;
 
 public class GenerateWindow {
 
-	JFrame frame;
+	JFrame frmMelodyGenerator;
 	private JTextField tempoField;
 	private JTextField numOfNotesField;
 
@@ -27,7 +27,7 @@ public class GenerateWindow {
 			public void run() {
 				try {
 					GenerateWindow window = new GenerateWindow();
-					window.frame.setVisible(true);
+					window.frmMelodyGenerator.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -47,34 +47,35 @@ public class GenerateWindow {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frame = new JFrame();
-		frame.setBounds(100, 100, 433, 205);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setLayout(null);
+		frmMelodyGenerator = new JFrame();
+		frmMelodyGenerator.setTitle("Melody Generator");
+		frmMelodyGenerator.setBounds(100, 100, 433, 205);
+		frmMelodyGenerator.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmMelodyGenerator.getContentPane().setLayout(null);
 		
 		JLabel lblSongOutput = new JLabel("");
 		lblSongOutput.setHorizontalAlignment(SwingConstants.CENTER);
 		lblSongOutput.setBounds(6, 77, 421, 16);
-		frame.getContentPane().add(lblSongOutput);
+		frmMelodyGenerator.getContentPane().add(lblSongOutput);
 		
 		tempoField = new JTextField();
 		tempoField.setText("120");
 		tempoField.setBounds(143, 37, 55, 28);
-		frame.getContentPane().add(tempoField);
+		frmMelodyGenerator.getContentPane().add(tempoField);
 		tempoField.setColumns(10);
 		
 		JLabel lblTempo = new JLabel("Tempo");
 		lblTempo.setBounds(17, 43, 48, 16);
-		frame.getContentPane().add(lblTempo);
+		frmMelodyGenerator.getContentPane().add(lblTempo);
 		
 		JLabel lblNumberOfNotes = new JLabel("Number of Notes");
 		lblNumberOfNotes.setBounds(17, 15, 122, 16);
-		frame.getContentPane().add(lblNumberOfNotes);
+		frmMelodyGenerator.getContentPane().add(lblNumberOfNotes);
 		
 		numOfNotesField = new JTextField();
 		numOfNotesField.setText("6");
 		numOfNotesField.setBounds(143, 9, 55, 28);
-		frame.getContentPane().add(numOfNotesField);
+		frmMelodyGenerator.getContentPane().add(numOfNotesField);
 		numOfNotesField.setColumns(10);
 		
 		JButton stopPlayingButton = new JButton("■");
@@ -86,7 +87,7 @@ public class GenerateWindow {
 			}
 		});
 		stopPlayingButton.setBounds(310, 103, 117, 76);
-		frame.getContentPane().add(stopPlayingButton);
+		frmMelodyGenerator.getContentPane().add(stopPlayingButton);
 		
 		JButton playButton = new JButton("▶");
 		playButton.setEnabled(false);
@@ -97,7 +98,7 @@ public class GenerateWindow {
 		});
 		playButton.setFont(new Font("Lucida Grande", Font.PLAIN, 23));
 		playButton.setBounds(191, 103, 117, 76);
-		frame.getContentPane().add(playButton);
+		frmMelodyGenerator.getContentPane().add(playButton);
 		
 		//when generate button is pushed..
 		JButton btnGenerate = new JButton("Generate");
@@ -124,6 +125,6 @@ public class GenerateWindow {
 			}
 		});
 		btnGenerate.setBounds(6, 103, 183, 76);
-		frame.getContentPane().add(btnGenerate);
+		frmMelodyGenerator.getContentPane().add(btnGenerate);
 	}
 }
