@@ -4,8 +4,9 @@ import java.awt.EventQueue;
 
 public class MG_Main {
 	
-	/* first argument is num of notes, second is tempo, third is whether you want to hear the song
-	 * if there is no third argument, it'll assume you want no sound output
+	/* first argument is num of notes, second is tempo, third is the index of the key
+	 * key you want in KEYSIG, fourth is whether you want to hear the song if there is 
+	 * no fourth argument, it'll assume you want no sound output.
 	 */
 	public static void main(String[] args) {
 		
@@ -14,12 +15,13 @@ public class MG_Main {
 			try {
 				Song.numOfNotes = Integer.parseInt(args[0]);
 				Song.tempo = Integer.parseInt(args[1]);
+				Song.keyIndex = Integer.parseInt(args[2]);
 			} catch (Exception f) {
-				System.out.println("ERROR: Could not convert all arguments");
+				System.out.println("ERROR: Invalid arguments");
 				return;
 			}
 			try {
-				soundOutput = Boolean.valueOf(args[2]);
+				soundOutput = Boolean.valueOf(args[3]);
 			} catch (Exception b) {};
 			Song.generate();
 			if (soundOutput)

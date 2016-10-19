@@ -3,7 +3,6 @@ package main;
 import java.awt.Color;
 import java.awt.EventQueue;
 import javax.swing.JFrame;
-//import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -12,6 +11,8 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import java.awt.Font;
 import javax.swing.SwingConstants;
+import javax.swing.JComboBox;
+import javax.swing.JFormattedTextField;
 
 public class GenerateWindow {
 
@@ -33,7 +34,6 @@ public class GenerateWindow {
 				}
 			}
 		});
-		
 	}
 
 	/**
@@ -60,7 +60,7 @@ public class GenerateWindow {
 		
 		tempoField = new JTextField();
 		tempoField.setText("120");
-		tempoField.setBounds(143, 37, 55, 28);
+		tempoField.setBounds(143, 37, 39, 28);
 		frmMelodyGenerator.getContentPane().add(tempoField);
 		tempoField.setColumns(10);
 		
@@ -74,7 +74,7 @@ public class GenerateWindow {
 		
 		numOfNotesField = new JTextField();
 		numOfNotesField.setText("6");
-		numOfNotesField.setBounds(143, 9, 55, 28);
+		numOfNotesField.setBounds(143, 9, 33, 28);
 		frmMelodyGenerator.getContentPane().add(numOfNotesField);
 		numOfNotesField.setColumns(10);
 		
@@ -118,13 +118,28 @@ public class GenerateWindow {
 					tempoField.setBackground(Color.red);
 					numOfNotesField.setBackground(Color.red);
 					JOptionPane.showMessageDialog(null, "Please enter a valid number");
+					System.out.println(t);
 				} finally {
-					tempoField.setBackground(null);
-					numOfNotesField.setBackground(null);
+					tempoField.setBackground(Color.white);
+					numOfNotesField.setBackground(Color.white);
 				}
 			}
 		});
 		btnGenerate.setBounds(6, 103, 183, 76);
 		frmMelodyGenerator.getContentPane().add(btnGenerate);
+		
+		JComboBox<KEYSIG> keyBox = new JComboBox(KEYSIG.values());
+		keyBox.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Song.keyIndex = keyBox.getSelectedIndex();
+			}
+		});
+		keyBox.setBounds(281, 11, 127, 27);
+		frmMelodyGenerator.getContentPane().add(keyBox);
+		
+		
+		JLabel lblKey = new JLabel("Key");
+		lblKey.setBounds(239, 15, 28, 16);
+		frmMelodyGenerator.getContentPane().add(lblKey);
 	}
 }
