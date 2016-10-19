@@ -19,7 +19,7 @@ public class Song {
 	public static void generate() {
 		//get rid of our last pattern
 		pattern.clear();
-		//insert tempo label
+		//insert tempo label 
 		pattern.add("T" + tempo);
 		//fill the pattern with notes
 		for (int i = 0; i < numOfNotes; i++) {

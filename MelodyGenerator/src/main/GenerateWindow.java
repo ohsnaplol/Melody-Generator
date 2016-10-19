@@ -12,7 +12,6 @@ import javax.swing.JOptionPane;
 import java.awt.Font;
 import javax.swing.SwingConstants;
 import javax.swing.JComboBox;
-import javax.swing.JFormattedTextField;
 
 public class GenerateWindow {
 
@@ -55,7 +54,7 @@ public class GenerateWindow {
 		
 		JLabel lblSongOutput = new JLabel("");
 		lblSongOutput.setHorizontalAlignment(SwingConstants.CENTER);
-		lblSongOutput.setBounds(6, 77, 421, 16);
+		lblSongOutput.setBounds(6, 71, 421, 22);
 		frmMelodyGenerator.getContentPane().add(lblSongOutput);
 		
 		tempoField = new JTextField();

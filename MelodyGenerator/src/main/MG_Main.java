@@ -20,6 +20,10 @@ public class MG_Main {
 				System.out.println("ERROR: Invalid arguments");
 				return;
 			}
+			if (Song.keyIndex > 50 || Song.keyIndex < 0) {
+				System.out.println("keyIndex must be between 0 and 50");
+				return;
+			}
 			try {
 				soundOutput = Boolean.valueOf(args[3]);
 			} catch (Exception b) {};
