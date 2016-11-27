@@ -1,17 +1,7 @@
 package main;
 
-import static org.junit.Assert.*;
-
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Random;
-
-import org.jfugue.pattern.Pattern;
-import org.jfugue.player.Player;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -50,7 +40,6 @@ public class MG_MainTest {
 			{"10","900","2","false"},	//[18]
 			{"11","130","52","true"},	//[19]
 			
-			
         });	
 	}
 
@@ -62,29 +51,6 @@ public class MG_MainTest {
 	public String keyIndex;
 	@Parameter(value=3)
 	public String playSound;
-	
-	
-	
-	
-	@BeforeClass
-	public static void setUpBeforeClass() throws Exception {
-		
-	}
-
-	@AfterClass
-	public static void tearDownAfterClass() throws Exception {
-		
-		
-	}
-
-	@Before
-	public void setUp() throws Exception {
-	}
-
-	@After
-	public void tearDown() throws Exception {
-	
-	}
 
 	@Test
 	public void test() {
@@ -99,16 +65,13 @@ public class MG_MainTest {
 		sb.append(playSound);
 		System.out.println(sb.toString());
 		
-		MG_Main mainTest = new MG_Main();
-		
 		String[] myArguments = new String[4];
 		myArguments[0] = numOfNotes;
 		myArguments[1] = tempo;
 		myArguments[2] = keyIndex;
 		myArguments[3] = playSound;
 			
-		mainTest.main(myArguments);
+		MG_Main.main(myArguments);
 
 	}
-
 }
