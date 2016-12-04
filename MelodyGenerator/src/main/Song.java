@@ -5,7 +5,6 @@ import java.io.*;
 import java.util.Scanner;
 import org.jfugue.pattern.Pattern;
 import org.jfugue.player.ManagedPlayer;
-import org.jfugue.player.ManagedPlayerListener;
 import org.jfugue.player.Player;
 
 /**
@@ -20,12 +19,19 @@ public class Song {
 	static ManagedPlayer mplayer = new ManagedPlayer();
 	static Random rng = new Random();
 	
-	public static void generate() {
+	public static void generate(boolean tonic) {
 		//get rid of our last pattern and put in tempo
 		pattern.clear();
 		pattern.add("T" + Song.tempo); // We don't use setTempo because pattern.clear in load() won't get rid of the tempo
 		//fill the pattern with notes
-		for (int i = 0; i < numOfNotes; i++) {
+		for (int i = 0; i <= numOfNotes-1; i++) {
+			pattern.add(KEYSIG.values()[keyIndex].getValue(rng.nextInt(7)));
+		}
+		if(tonic){
+			//add the first note to the pattern
+			pattern.add(pattern.getTokens().get(1));
+		} else {
+			//otherwise just add another random note
 			pattern.add(KEYSIG.values()[keyIndex].getValue(rng.nextInt(7)));
 		}
 		System.out.println(pattern);
@@ -51,12 +57,6 @@ public class Song {
 		} catch (Exception e) {
 			System.out.println("Couldn't convert to MIDI");
 		}
-		if (mplayer.isStarted())
-			System.out.println("Started playing");
-		if (mplayer.isPlaying())
-			System.out.println("Is playing");
-		if (mplayer.isFinished())
-			System.out.println("Finished playing");
 	}
 
 	/**

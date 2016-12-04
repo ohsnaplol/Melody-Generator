@@ -27,7 +27,7 @@ public class MG_Main {
 			try {
 				soundOutput = Boolean.valueOf(args[3]);
 			} catch (Exception b) {};
-			Song.generate();
+			Song.generate(true);
 			if (soundOutput)
 				Song.play();
 			System.out.println(Song.pattern.toString());

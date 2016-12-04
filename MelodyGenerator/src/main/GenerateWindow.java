@@ -15,6 +15,7 @@ import java.awt.Font;
 import javax.swing.SwingConstants;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
+import javax.swing.JCheckBox;
 
 public class GenerateWindow {
 
@@ -22,6 +23,7 @@ public class GenerateWindow {
 	private JTextField tempoField;
 	private JTextField numOfNotesField;
 	JFileChooser jFileChooser = new JFileChooser();
+	private boolean isTonic = false;
 
 
 	/**
@@ -190,7 +192,7 @@ public class GenerateWindow {
 					Song.tempo = Integer.parseInt(tempoField.getText());
 					Song.numOfNotes = Integer.parseInt(numOfNotesField.getText());
 					//generate the random notes
-					Song.generate();
+					Song.generate(isTonic);
 					//show what notes rng has chosen (for some reason this still only happens after notes are played)
 					lblSongOutput.setText(Song.pattern.toString());
 					Song.play();
@@ -210,5 +212,18 @@ public class GenerateWindow {
 		});
 		btnGenerate.setBounds(6, 136, 183, 76);
 		frmMelodyGenerator.getContentPane().add(btnGenerate);
+		
+		JCheckBox chckbxTonic = new JCheckBox("Tonic");
+		chckbxTonic.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(isTonic) {
+					isTonic = false;
+				} else {
+					isTonic = true;
+				}
+			}
+		});
+		chckbxTonic.setBounds(239, 70, 128, 23);
+		frmMelodyGenerator.getContentPane().add(chckbxTonic);
 	}
 }
