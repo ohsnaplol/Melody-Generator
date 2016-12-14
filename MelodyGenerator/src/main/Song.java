@@ -20,10 +20,10 @@ public class Song {
 	static Random rng = new Random();
 	
 	public static void generate(boolean tonic) {
-		//get rid of our last pattern and put in tempo
+		// get rid of our last pattern and put in tempo
 		pattern.clear();
 		pattern.setTempo(tempo);
-		//fill the pattern with notes
+		// fill the pattern with notes
 		for (int i = 0; i <= numOfNotes-1; i++) {
 			if(tonic && i == 0) { // if tonic, make the first note same as first note listed in KEYSIG
 				pattern.add(KEYSIG.values()[keyIndex].getValue(0));

@@ -1,7 +1,7 @@
 package main;
 
 public enum KEYSIG {
-	//C Major
+	//C Major 
 	CMAJOR("C D E F G A B"),
 	//a natural minor
 	anatmin("a b c d e f g"),
