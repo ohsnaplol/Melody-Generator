@@ -22,14 +22,18 @@ public class Song {
 	public static void generate(boolean tonic) {
 		//get rid of our last pattern and put in tempo
 		pattern.clear();
-		pattern.add("T" + Song.tempo); // We don't use setTempo because pattern.clear in load() won't get rid of the tempo
+		pattern.setTempo(tempo);
 		//fill the pattern with notes
 		for (int i = 0; i <= numOfNotes-1; i++) {
 			pattern.add(KEYSIG.values()[keyIndex].getValue(rng.nextInt(7)));
 		}
-		if(tonic){
-			//add the first note to the pattern
-			pattern.add(pattern.getTokens().get(1));
+		if(tonic) {
+			// If the first token is an instrument, don't add that to the end! Add the first actual note!
+			if (pattern.getTokens().get(1).toString().charAt(0) != 'I') {
+				pattern.add(pattern.getTokens().get(1));
+			} else {
+				pattern.add(pattern.getTokens().get(2));
+			}
 		} else {
 			//otherwise just add another random note
 			pattern.add(KEYSIG.values()[keyIndex].getValue(rng.nextInt(7)));

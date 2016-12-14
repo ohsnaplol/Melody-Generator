@@ -3,6 +3,10 @@ package main;
 import java.awt.Color;
 import java.awt.EventQueue;
 import javax.swing.JFrame;
+import javax.sound.midi.Instrument;
+import javax.sound.midi.MidiSystem;
+import javax.sound.midi.MidiUnavailableException;
+import javax.sound.midi.Synthesizer;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -16,6 +20,8 @@ import javax.swing.SwingConstants;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JCheckBox;
+import javax.swing.JToggleButton;
+import javax.swing.JSeparator;
 
 public class GenerateWindow {
 
@@ -44,29 +50,31 @@ public class GenerateWindow {
 
 	/**
 	 * Create the application.
+	 * @throws MidiUnavailableException 
 	 */
-	public GenerateWindow() {
+	public GenerateWindow() throws MidiUnavailableException {
 		initialize();
 	}
 
 	/**
 	 * Initialize the contents of the frame.
+	 * @throws MidiUnavailableException 
 	 */
-	private void initialize() {
+	private void initialize() throws MidiUnavailableException {
 		frmMelodyGenerator = new JFrame();
 		frmMelodyGenerator.setTitle("Melody Generator");
-		frmMelodyGenerator.setBounds(100, 100, 433, 240);
+		frmMelodyGenerator.setBounds(100, 100, 433, 272);
 		frmMelodyGenerator.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmMelodyGenerator.getContentPane().setLayout(null);
 		
 		JLabel lblSongOutput = new JLabel();
 		lblSongOutput.setHorizontalAlignment(SwingConstants.CENTER);
-		lblSongOutput.setBounds(6, 102, 421, 22);
+		lblSongOutput.setBounds(6, 137, 421, 22);
 		frmMelodyGenerator.getContentPane().add(lblSongOutput);
 		
 		tempoField = new JTextField();
 		tempoField.setText("120");
-		tempoField.setBounds(143, 68, 39, 28);
+		tempoField.setBounds(135, 68, 39, 28);
 		frmMelodyGenerator.getContentPane().add(tempoField);
 		tempoField.setColumns(10);
 		
@@ -80,7 +88,7 @@ public class GenerateWindow {
 		
 		numOfNotesField = new JTextField();
 		numOfNotesField.setText("6");
-		numOfNotesField.setBounds(143, 40, 33, 28);
+		numOfNotesField.setBounds(135, 40, 33, 28);
 		frmMelodyGenerator.getContentPane().add(numOfNotesField);
 		numOfNotesField.setColumns(10);
 		
@@ -91,7 +99,7 @@ public class GenerateWindow {
 				Song.reset();
 			}
 		});
-		stopPlayingButton.setBounds(310, 136, 117, 76);
+		stopPlayingButton.setBounds(310, 168, 117, 76);
 		frmMelodyGenerator.getContentPane().add(stopPlayingButton);
 		
 		JButton playButton = new JButton("▶");
@@ -99,10 +107,11 @@ public class GenerateWindow {
 		playButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Song.play();
+				
 			}
 		});
 		playButton.setFont(new Font("Lucida Grande", Font.PLAIN, 23));
-		playButton.setBounds(191, 136, 117, 76);
+		playButton.setBounds(191, 168, 117, 76);
 		frmMelodyGenerator.getContentPane().add(playButton);
 		
 		@SuppressWarnings({ "unchecked", "rawtypes" })
@@ -112,28 +121,17 @@ public class GenerateWindow {
 				Song.keyIndex = keyBox.getSelectedIndex();
 			}
 		});
-		keyBox.setBounds(281, 42, 127, 27);
+		keyBox.setBounds(310, 42, 117, 27);
 		frmMelodyGenerator.getContentPane().add(keyBox);
 		
 		
 		JLabel lblKey = new JLabel("Key");
-		lblKey.setBounds(239, 46, 28, 16);
+		lblKey.setBounds(220, 46, 28, 16);
 		frmMelodyGenerator.getContentPane().add(lblKey);
 		
 		JButton loadButton = new JButton("Load pattern");
 		loadButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
-				// Can someone help me make it so that it asks if you want to erase current song before you save?
-				// If there is a pattern output..
-//				if(Song.pattern != null) {
-//					System.out.println("There is nothing in the song pattern");
-//					int dialogueResult = JOptionPane.showConfirmDialog(null, "Erase current output?");
-//					// If they don't click yes..
-//					if (dialogueResult == JOptionPane.YES_OPTION) {
-//						return;
-//					}
-//				}
 				// Load
 				jFileChooser.setCurrentDirectory(new File("/User"));
 				int result = jFileChooser.showOpenDialog(new JFrame());
@@ -154,17 +152,14 @@ public class GenerateWindow {
 				}
 			}
 		);
-		loadButton.setBounds(6, 6, 117, 29);
+		loadButton.setBounds(248, 5, 117, 29);
 		frmMelodyGenerator.getContentPane().add(loadButton);
 		
 		JButton saveButton = new JButton("Save pattern");
 		saveButton.setEnabled(false);
 		saveButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//JFileChooser jFileChooser = new JFileChooser();
-				jFileChooser.setCurrentDirectory(new File("/User"));
-				//jFileChooser.setFileSelectionMode(jFileChooser.DIRECTORIES_ONLY);
-				
+				jFileChooser.setCurrentDirectory(new File("/User"));				
 				int result = jFileChooser.showSaveDialog(new JFrame());
 				
 				if (result == JFileChooser.APPROVE_OPTION) {
@@ -173,7 +168,6 @@ public class GenerateWindow {
 					try {
 						Song.save(fileToSave);
 					} catch (IOException e1) {
-						// TODO Auto-generated catch block
 						System.out.println("error");
 						e1.printStackTrace();
 					}
@@ -181,7 +175,7 @@ public class GenerateWindow {
 				
 			}
 		});
-		saveButton.setBounds(135, 6, 117, 29);
+		saveButton.setBounds(54, 5, 117, 29);
 		frmMelodyGenerator.getContentPane().add(saveButton);
 		
 		//when generate button is pushed..
@@ -210,20 +204,50 @@ public class GenerateWindow {
 				}
 			}
 		});
-		btnGenerate.setBounds(6, 136, 183, 76);
+		btnGenerate.setBounds(6, 168, 183, 76);
 		frmMelodyGenerator.getContentPane().add(btnGenerate);
 		
 		JCheckBox chckbxTonic = new JCheckBox("Tonic");
 		chckbxTonic.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(isTonic) {
+				if(isTonic)
 					isTonic = false;
-				} else {
+				else
 					isTonic = true;
-				}
 			}
 		});
-		chckbxTonic.setBounds(239, 70, 128, 23);
+		chckbxTonic.setBounds(214, 70, 69, 23);
 		frmMelodyGenerator.getContentPane().add(chckbxTonic);
+		
+		// Setup for our instrument list
+		String[] instrumentList = new String[129];
+        Synthesizer synthesizer = MidiSystem.getSynthesizer();
+        synthesizer.open();
+        Instrument[] orchestra = synthesizer.getAvailableInstruments();
+        int i = 0;
+        for (Instrument instrument : orchestra) {
+        	instrumentList[i] = instrument.toString().substring(12);
+            i++;
+        }
+        synthesizer.close();
+        
+		@SuppressWarnings("unchecked")
+		JComboBox comboBox = new JComboBox(instrumentList);
+		comboBox.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Song.pattern.setInstrument(comboBox.getSelectedIndex());
+			    lblSongOutput.setText(Song.pattern.toString());
+			}
+		});
+		comboBox.setBounds(135, 98, 292, 27);
+		frmMelodyGenerator.getContentPane().add(comboBox);
+		
+		JLabel lblNewLabel = new JLabel("Instrument");
+		lblNewLabel.setBounds(17, 102, 69, 16);
+		frmMelodyGenerator.getContentPane().add(lblNewLabel);
+		
+		JSeparator separator = new JSeparator();
+		separator.setBounds(6, 126, 421, 12);
+		frmMelodyGenerator.getContentPane().add(separator);
 	}
 }
