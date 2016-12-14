@@ -25,17 +25,16 @@ public class Song {
 		pattern.setTempo(tempo);
 		//fill the pattern with notes
 		for (int i = 0; i <= numOfNotes-1; i++) {
-			pattern.add(KEYSIG.values()[keyIndex].getValue(rng.nextInt(7)));
-		}
-		if(tonic) {
-			// If the first token is an instrument, don't add that to the end! Add the first actual note!
-			if (pattern.getTokens().get(1).toString().charAt(0) != 'I') {
-				pattern.add(pattern.getTokens().get(1));
+			if(tonic && i == 0) { // if tonic, make the first note same as first note listed in KEYSIG
+				pattern.add(KEYSIG.values()[keyIndex].getValue(0));
 			} else {
-				pattern.add(pattern.getTokens().get(2));
+				pattern.add(KEYSIG.values()[keyIndex].getValue(rng.nextInt(7)));
 			}
+		}
+		if(tonic) { // add the first note we have listed in the KEYSIG
+			pattern.add(KEYSIG.values()[keyIndex].getValue(0));
 		} else {
-			//otherwise just add another random note
+			// otherwise just add another random note
 			pattern.add(KEYSIG.values()[keyIndex].getValue(rng.nextInt(7)));
 		}
 		System.out.println(pattern);
