@@ -24,7 +24,7 @@ public class Song {
 		pattern.clear();
 		pattern.setTempo(tempo);
 		// fill the pattern with notes
-		for (int i = 0; i <= numOfNotes-1; i++) {
+		for (int i = 0; i <= numOfNotes-2; i++) {
 			if(tonic && i == 0) { // if tonic, make the first note same as first note listed in KEYSIG
 				pattern.add(KEYSIG.values()[keyIndex].getValue(0));
 			} else {
