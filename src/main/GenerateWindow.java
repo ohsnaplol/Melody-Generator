@@ -227,10 +227,10 @@ public class GenerateWindow {
         synthesizer.open();
         Instrument[] orchestra = synthesizer.getAvailableInstruments();
         for (int i = 0; i < 128; i++) { // There are more than 128 instruments, however setIntstrument only allows up to 127
-        	instrumentList.add(orchestra[i].toString().substring(12, 24));
+        	instrumentList.add(orchestra[i].toString().substring(12, orchestra[i].toString().indexOf("bank #")));
         }
         synthesizer.close();
-        
+
 		@SuppressWarnings({ "unchecked", "rawtypes" })
 		JComboBox comboBox = new JComboBox(instrumentList.toArray());
 		comboBox.addActionListener(new ActionListener() {
