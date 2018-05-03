@@ -5,7 +5,9 @@ This program randomizes a set of music notes with a given key signature and play
 
 ## How it works
 JFugue uses something called a pattern to create and play music on the fly. Here's an example of one:
+```
 T200 I\[Honkey_Tonk\] G C E E B E A B G
+```
 This pattern will play the notes G, C, E, etc. using the built-in Midi intrument Honkey Tonk at 200 beats per minute.
 We modify this string pattern depending on what the user wants. When we generate a new melody, we use RNG to select notes from an enumeration that contains the notes in the key signature requested by the user. 
 If the user wants a tonic melody, the first and last notes generated will be the same.
