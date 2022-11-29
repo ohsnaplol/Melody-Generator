@@ -24,3 +24,5 @@ Programmer - Marcello Galvan
 Music theory consulting - Yukun Pei
 
 Unit testing - Tony Gavidia
+
+This is a project from my days at UM. Archived for prosperity 😎
